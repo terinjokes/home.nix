@@ -1,8 +1,13 @@
 { config, lib, pkgs, ... }:
 let
   unstable = import <unstable> { config = { allowUnfree = true; }; };
+  pass = import ./pass.nix;
 in
 {
+  imports = [
+    ./common.nix
+  ];
+
   nixpkgs.overlays = [
     (
       self: super: {
@@ -35,6 +40,7 @@ in
         gopls = unstable.gopls;
         gomodifytags = unstable.gomodifytags;
         gore = unstable.gore;
+        yubikey-agent = unstable.yubikey-agent;
       }
     )
   ];
@@ -135,11 +141,11 @@ in
         "x-scheme-handler/unknown" = [ "google-chrome-beta.desktop" ];
       };
     };
-    configFile."sxhkd/sxhkdrc".text = concatStringsSep "\n" (
-      mapAttrsToList
+    configFile."sxhkd/sxhkdrc".text = lib.concatStringsSep "\n" (
+      lib.mapAttrsToList
         (
           hotkey: command:
-            optionalString (command != null) ''
+            lib.optionalString (command != null) ''
               ${hotkey}
                 ${command}
             ''

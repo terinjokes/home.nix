@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
-
 with lib;
-let
-  pass = import ./pass.nix;
 
-in
 {
   imports = [ ./modules/programs/openrct2.nix ];
 
