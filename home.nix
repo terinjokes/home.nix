@@ -14,7 +14,7 @@
       google-chrome = super.google-chrome.override {
         commandLineArgs = "--enable-features=WebUIDarkMode --force-dark-mode";
       };
-      kubectx = super.callPackage ./packages/kubectx.nix { };
+      kubectx = super.callPackage ./packages/kubectx { };
       aaru =
         super.callPackage ./packages/aaru { dotnetSDK = super.dotnet-sdk_5; };
     })
