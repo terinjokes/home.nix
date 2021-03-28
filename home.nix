@@ -15,6 +15,8 @@
         commandLineArgs = "--enable-features=WebUIDarkMode --force-dark-mode";
       };
       kubectx = super.callPackage ./packages/kubectx.nix { };
+      aaru =
+        super.callPackage ./packages/aaru { dotnetSDK = super.dotnet-sdk_5; };
     })
   ];
 
@@ -75,6 +77,8 @@
 
     hunspell
     hunspellDicts.en-us-large
+
+    aaru
   ];
 
   programs.alacritty = {
