@@ -134,6 +134,11 @@
     '';
   };
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
