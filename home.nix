@@ -75,6 +75,7 @@
 
     zoom-us
 
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     hunspell
     hunspellDicts.en-us-large
 
