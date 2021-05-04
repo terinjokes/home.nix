@@ -698,7 +698,7 @@
 
   home.sessionVariables = {
     QT_STYLE_OVERRIDE = "kvantum-dark";
-    EDITOR = "emacslient -t";
+    EDITOR = "emacsclient -t";
   };
 
   # This value determines the Home Manager release that your
