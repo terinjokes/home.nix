@@ -1,0 +1,85 @@
+override TERM in configuration
+
+From: Terin Stock <terinjokes@gmail.com>
+
+
+---
+ mux.c      |    4 +++-
+ readconf.c |   14 +++++++++++++-
+ readconf.h |    2 ++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/mux.c b/mux.c
+index d0f066a7..7dd770ff 100644
+--- a/mux.c
++++ b/mux.c
+@@ -1896,7 +1896,9 @@ mux_client_request_session(int fd)
+ 	if (stdin_null_flag && stdfd_devnull(1, 0, 0) == -1)
+ 		fatal_f("stdfd_devnull failed");
+ 
+-	if ((term = getenv("TERM")) == NULL)
++	term = options.override_term ? options.override_term : getenv("TERM");
++
++	if (term == NULL)
+ 		term = "";
+ 	echar = 0xffffffff;
+ 	if (options.escape_char != SSH_ESCAPECHAR_NONE)
+diff --git a/readconf.c b/readconf.c
+index 724974b7..7b52457b 100644
+--- a/readconf.c
++++ b/readconf.c
+@@ -173,7 +173,7 @@ typedef enum {
+ 	oStreamLocalBindMask, oStreamLocalBindUnlink, oRevokedHostKeys,
+ 	oFingerprintHash, oUpdateHostkeys, oHostbasedAcceptedAlgorithms,
+ 	oPubkeyAcceptedAlgorithms, oCASignatureAlgorithms, oProxyJump,
+-	oSecurityKeyProvider, oKnownHostsCommand,
++	oSecurityKeyProvider, oKnownHostsCommand, oOverrideTerm,
+ 	oIgnore, oIgnoredUnknownOption, oDeprecated, oUnsupported
+ } OpCodes;
+ 
+@@ -316,6 +316,7 @@ static struct {
+ 	{ "proxyjump", oProxyJump },
+ 	{ "securitykeyprovider", oSecurityKeyProvider },
+ 	{ "knownhostscommand", oKnownHostsCommand },
++	{ "overrideterm", oOverrideTerm },
+ 
+ 	{ NULL, oBadOption }
+ };
+@@ -2050,6 +2051,16 @@ parse_pubkey_algos:
+ 			*charptr = xstrdup(arg);
+ 		break;
+ 
++	case oOverrideTerm:
++		if (s == NULL) {
++			error("%.200s line %d: Missing argument.",
++			    filename, linenum);
++			return -1;
++		}
++		len = strspn(s, WHITESPACE "=");
++		options->override_term = xstrdup(s + len);
++		return 0;
++
+ 	case oDeprecated:
+ 		debug("%s line %d: Deprecated option \"%s\"",
+ 		    filename, linenum, keyword);
+@@ -2275,6 +2286,7 @@ initialize_options(Options * options)
+ 	options->hostbased_accepted_algos = NULL;
+ 	options->pubkey_accepted_algos = NULL;
+ 	options->known_hosts_command = NULL;
++	options->override_term = NULL;
+ }
+ 
+ /*
+diff --git a/readconf.h b/readconf.h
+index 2fba866e..a8080278 100644
+--- a/readconf.h
++++ b/readconf.h
+@@ -175,6 +175,8 @@ typedef struct {
+ 
+ 	char   *known_hosts_command;
+ 
++	char *override_term;
++
+ 	char	*ignored_unknown; /* Pattern list of unknown tokens to ignore */
+ }       Options;
+ 

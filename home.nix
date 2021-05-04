@@ -46,6 +46,10 @@
     gitAndTools.ghq
     gitAndTools.stgit
 
+    # don't override openssh, as that will cause a rebuild
+    # of several other packages.
+    (pkgs.callPackage ./packages/openssh-term { })
+
     pavucontrol
     herbstluftwm
     xclip
@@ -436,6 +440,7 @@
     enable = true;
     controlMaster = "auto";
     controlPersist = "10m";
+    extraOptionOverrides = { IgnoreUnknown = "OverrideTerm"; };
     extraConfig = ''
       VisualHostKey yes
     '';
