@@ -144,6 +144,12 @@
     scriptPath = ".hm-xsession";
     importedVariables = [ "PATH" "QT_STYLE_OVERRIDE" ];
     windowManager.command = "${pkgs.herbstluftwm}/bin/herbstluftwm";
+
+    pointerCursor = {
+      name = "Adwaita";
+      package = pkgs.gnome3.adwaita-icon-theme;
+      size = 16;
+    };
   };
 
   services.dunst = {
