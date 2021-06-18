@@ -29,6 +29,8 @@
   home.homeDirectory = "/home/terin";
 
   home.packages = with pkgs; [
+    dconf
+
     nixfmt
     google-chrome
 
@@ -688,6 +690,7 @@
         </match>
       </fontconfig>
     '';
+    configFile."herbstluftwm/autostart".source = ./autostart;
   };
 
   fonts.fontconfig.enable = true;
