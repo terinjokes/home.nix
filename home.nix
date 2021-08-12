@@ -59,11 +59,6 @@ in {
     p7zip
 
     libsForQt5.qtstyleplugin-kvantum
-    (pkgs.runCommand "qt514-kvantum" { } ''
-      mkdir $out
-      ln -s ${pkgs.libsForQt514.qtstyleplugin-kvantum}/* $out
-      rm $out/bin
-    '')
 
     kubectl
     kubectx
@@ -138,18 +133,6 @@ in {
       VisualHostKey yes
     '';
     serverAliveInterval = 60;
-    matchBlocks = {
-      "github.com" = {
-        extraOptions = {
-          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
-        };
-      };
-      "100.75.69.73" = {
-        extraOptions = {
-          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
-        };
-      };
-    };
   };
 
   programs.git = {
@@ -215,25 +198,6 @@ in {
     enable = true;
     client.enable = true;
     socketActivation.enable = true;
-  };
-
-  systemd.user.services.yubikey-agent = {
-    Unit = {
-      Description = "Seamless ssh-agent for YubiKeys";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Install = { WantedBy = [ "graphical-session.target" ]; };
-
-    Service = {
-      Environment = "PATH=${lib.makeBinPath [ pkgs.pinentry-qt ]}";
-      ExecStart =
-        "${pkgs.yubikey-agent}/bin/yubikey-agent -l %t/yubikey-agent/yubikey-agent.sock";
-      ExecReload = "${pkgs.utillinux}/bin/kill -HUP $MAINPID";
-      UMask = 177;
-      RuntimeDirectory = "yubikey-agent";
-    };
   };
 
   xdg = {

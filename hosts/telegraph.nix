@@ -5,8 +5,8 @@
 
   home.packages = with pkgs; [
     google-chrome
-
     pavucontrol
+
     pamixer
     herbstluftwm
 
@@ -88,6 +88,21 @@
     extraConfig = {
       show-icons = true;
       modi = "drun,run";
+    };
+  };
+
+  programs.ssh = {
+    matchBlocks = {
+      "github.com" = {
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
+      "100.75.69.73" = {
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
     };
   };
 
@@ -256,6 +271,25 @@
       };
     };
     script = "polybar eDP-1 & polybar DP-3-1 &";
+  };
+
+  systemd.user.services.yubikey-agent = {
+    Unit = {
+      Description = "Seamless ssh-agent for YubiKeys";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Install = { WantedBy = [ "graphical-session.target" ]; };
+
+    Service = {
+      Environment = "PATH=${lib.makeBinPath [ pkgs.pinentry-qt ]}";
+      ExecStart =
+        "${pkgs.yubikey-agent}/bin/yubikey-agent -l %t/yubikey-agent/yubikey-agent.sock";
+      ExecReload = "${pkgs.utillinux}/bin/kill -HUP $MAINPID";
+      UMask = 177;
+      RuntimeDirectory = "yubikey-agent";
+    };
   };
 
   xsession = {
