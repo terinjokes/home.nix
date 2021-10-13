@@ -283,7 +283,10 @@
     Install = { WantedBy = [ "graphical-session.target" ]; };
 
     Service = {
-      Environment = "PATH=${lib.makeBinPath [ pkgs.pinentry-qt ]}";
+      Environment = "PATH=${
+          (lib.makeBinPath
+            (with pkgs; [ pinentry-qt libsForQt5.qtstyleplugin-kvantum ]))
+        }";
       ExecStart =
         "${pkgs.yubikey-agent}/bin/yubikey-agent -l %t/yubikey-agent/yubikey-agent.sock";
       ExecReload = "${pkgs.utillinux}/bin/kill -HUP $MAINPID";
