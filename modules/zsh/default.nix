@@ -8,6 +8,7 @@
       ignoreDups = true;
       ignoreSpace = true;
     };
+    shellAliases = { ls = "ls --color"; };
     initExtra = ''
       . ${./zinput}
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

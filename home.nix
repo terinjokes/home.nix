@@ -1,6 +1,14 @@
 { config, pkgs, lib, ... }:
 
-let unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+let
+  unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+  dircolorForExtensions = color: extensions:
+    builtins.listToAttrs (builtins.map (name: {
+      name = name;
+      value = color;
+    }) extensions);
+  splitExtensions = extensions:
+    lib.strings.splitString " " (lib.concatStringsSep " " extensions);
 
 in {
   imports = [ ./modules/xsecurelock ./modules/zsh ./hosts ];
@@ -67,6 +75,69 @@ in {
     hunspell
     hunspellDicts.en-us-large
   ];
+
+  programs.dircolors = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      NORMAL = "00";
+      RESET = "0";
+      FILE = "00";
+      DIR = "01;34";
+      LINK = "36";
+      MULTIHARDLINK = "04;36";
+      FIFO = "04;01;36";
+      SOCK = "04;33";
+      DOOR = "04;01;36";
+      BLK = "01;33";
+      CHR = "33";
+      ORPHAN = "31";
+      MISSING = "01;37;41";
+      EXEC = "01;36";
+      SETUID = "01;04;37";
+      SETGID = "01;04;37";
+      CAPABILITY = "01;37";
+      STICKY_OTHER_WRITABLE = "01;37;44";
+      OTHER_WRITABLE = "01;04;34";
+      STICKY = "04;37;44";
+    }
+    # Archivies
+      // dircolorForExtensions "01;32" (splitExtensions [
+        ".7z .ace .alz .arc .arj .bz .bz2 .cab .cpio .deb .dz"
+        ".ear .gz .jar .lha .lrz .lz .lz4 .lzh .lzma .lzo .rar"
+        ".rpm .rz .sar .t7z .tar .taz .tbz .tbz2 .tgz .tlz .txz"
+        ".tz .tzo .tzst .war .xz .z .Z .zip .zoo .zst"
+      ])
+      # Audio
+      // dircolorForExtensions "32" (splitExtensions [
+        ".aac .au .flac .m4a .mid .midi .mka .mp3 .mpa .mpeg .mpg .ogg .opus .ra .wav"
+      ])
+      # Documents
+      // dircolorForExtensions "32" (splitExtensions [
+        ".doc .docx .dot .odg .odp .ods .odt .otg .otp .ots .ott .pdf .ppt .pptx .xls .xlsx"
+      ])
+      # Encryption
+      // dircolorForExtensions "01;35"
+      (splitExtensions [ ".3des .aes .age .gpg .pgp" ])
+      # Executables
+      // dircolorForExtensions "01;36"
+      (splitExtensions [ ".app .bat .btm .cmd .com .exe .reg" ])
+      # Ignores
+      // dircolorForExtensions "02;37" (splitExtensions
+        [ "*~ .bak .BAK .log .log .old .OLD .orig .ORIG .swo .swp" ])
+      # Images
+      // dircolorForExtensions "32" (splitExtensions [
+        ".bmp .cgm .dl .dvi .emf .eps .gif .jpeg .jpg .JPG .mng"
+        ".pbm .pcx .pgm .png .PNG .ppm .pps .ppsx .ps .svg .svgz"
+        ".tga .tif .tiff .xbm .xcf .xpm .xwd .xwd .yuv"
+      ])
+      # Video
+      // dircolorForExtensions "32" (splitExtensions [
+        ".anx .asf .avi .axv .flc .fli .flv .gl .m2v .m4v .mkv"
+        ".mov .MOV .mp4 .mpeg .mpg .nuv .ogm .ogv .ogx .qt .rm"
+        ".rmvb .swf .vob .webm .wmv"
+      ]);
+  };
 
   programs.alacritty = {
     enable = true;
