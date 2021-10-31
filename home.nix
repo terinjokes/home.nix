@@ -11,7 +11,8 @@ let
     lib.strings.splitString " " (lib.concatStringsSep " " extensions);
 
 in {
-  imports = [ ./modules/xsecurelock ./modules/zsh ./hosts ];
+  imports =
+    [ ./modules/xsecurelock ./modules/zsh ./modules/herbstluftwm ./hosts ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
@@ -265,6 +266,149 @@ in {
     extraPackages = epkgs: [ epkgs.vterm ];
   };
 
+  programs.herbstluftwm = {
+    enable = true;
+    keybindings = {
+      "Mod4-Mod1-q" = "quit";
+      "Mod4-Mod1-r" = "reload";
+      "Mod4-w" = "close";
+      "Mod4-space" = "spawn ${pkgs.rofi}/bin/rofi -show drun";
+      "Mod4-Return" = "spawn ${pkgs.alacritty}/bin/alacritty";
+
+      # brightness controls
+      "XF86MonBrightnessUp" = "spawn ${pkgs.brillo}/bin/brillo -A 5";
+      "XF86MonBrightnessDown" = "spawn ${pkgs.brillo}/bin/brillo -U 5";
+      "Shift-XF86MonBrightnessUp" =
+        "spawn ${pkgs.brillo}/bin/brillo -S 100 -u 1000000";
+      "Shift-XF86MonBrightnessDown" =
+        "spawn ${pkgs.brillo}/bin/brillo -S 0 -u 1000000";
+
+      # audio mixer controls
+      "XF86AudioMute" = "spawn ${pkgs.pamixer}/bin/pamixer -t";
+      "XF86AudioRaiseVolume" = "spawn ${pkgs.pamixer}/bin/pamixer -i 5";
+      "XF86AudioLowerVolume" = "spawn ${pkgs.pamixer}/bin/pamixer -d 5";
+
+      # focusing clients
+      "Mod4-Left" = "focus left";
+      "Mod4-Down" = "focus down";
+      "Mod4-Up" = "focus up";
+      "Mod4-Right" = "focus right";
+      "Mod4-h" = "focus left";
+      "Mod4-j" = "focus down";
+      "Mod4-k" = "focus up";
+      "Mod4-l" = "focus right";
+
+      # moving clients in tiling and floating mode
+      "Mod4-Shift-Left" = "shift left";
+      "Mod4-Shift-Down" = "shift down";
+      "Mod4-Shift-Up" = "shift up";
+      "Mod4-Shift-Right" = "shift right";
+      "Mod4-Shift-h" = "shift left";
+      "Mod4-Shift-j" = "shift down";
+      "Mod4-Shift-k" = "shift up";
+      "Mod4-Shift-l" = "shift right";
+
+      # splitting frames
+      "Mod4-u" = "split bottom 0.5";
+      "Mod4-o" = "split right 0.5";
+      "Mod4-Control-space" = "split explode";
+
+      # resizing frames
+      "Mod4-Control-h" = "resize left +0.02";
+      "Mod4-Control-j" = "resize down +0.02";
+      "Mod4-Control-k" = "resize up +0.02";
+      "Mod4-Control-l" = "resize right +0.02";
+      "Mod4-Control-Left" = "resize left +0.02";
+      "Mod4-Control-Down" = "resize down +0.02";
+      "Mod4-Control-Up" = "resize up +0.02";
+      "Mod4-Control-Right" = "resize right +0.02";
+
+      # tag cycling
+      "Mod4-period" = "use_index +1 --skip-visible";
+      "Mod4-comma" = "use_index -1 --skip-visible";
+
+      # layouting
+      "Mod4-r" = "remove";
+      "Mod4-s" = "floating toggle";
+      "Mod4-f" = "fullscreen toggle";
+      "Mod4-Shift-f" = "set_attr clients.focus.floating toggle";
+      "Mod4-p" = "pseudotile toggle";
+      "Mod4-Shift-space" = ''
+        or , and . compare tags.focus.curframe_wcount = 2 \
+                 . cycle_layout +1 vertical horizontal max vertical grid \
+           , cycle_layout +1
+      '';
+
+      # focus
+      "Mod4-BackSpace" = "cycle_monitor";
+      "Mod4-Tab" = "cycle_all +1";
+      "Mod4-Shift-Tab" = "cycle_all -1";
+      "Mod4-c" = "cycle";
+      "Mod4-i" = "jumpto urgent";
+    } // (builtins.listToAttrs (lib.flatten (map (tag: [
+      {
+        name = "Mod4-${toString (tag + 1)}";
+        value = "use_index ${toString tag}";
+      }
+      {
+        name = "Mod4-Shift-${toString (tag + 1)}";
+        value = "move_index ${toString tag}";
+      }
+    ]) (lib.lists.range 0 8))));
+    mousebindings = {
+      "Mod4-Button1" = "move";
+      "Mod4-Button2" = "zoom";
+      "Mod4-Button3" = "resize";
+    };
+    settings = {
+      default_frame_layout = "horizontal";
+      frame_bg_normal_color = "'#565656'";
+      frame_bg_active_color = "'#345F0C'";
+      frame_bg_transparent = true;
+      frame_transparent_width = 5;
+      frame_border_width = 1;
+      frame_gap = 10;
+      always_show_frame = true;
+      window_gap = 5;
+      frame_padding = 0;
+      smart_window_surroundings = true;
+      smart_frame_surroundings = true;
+      mouse_recenter_gap = 0;
+      focus_follows_mouse = true;
+      tree_style = "'╾│ ├└╼─┐'";
+    };
+    attributes = {
+      theme = {
+        normal.color = "'#454545'";
+        urgent.color = "orange";
+        background_color = "'#141414'";
+        active = {
+          color = "'#9fBC00'";
+          inner_color = "'#3E4A00'";
+          outer_color = "'#3E4A00'";
+        };
+
+        inner_color = "black";
+        inner_width = 1;
+        border_width = 3;
+
+        floating = {
+          border_width = 4;
+          outer_width = 1;
+          outer_color = "black";
+        };
+      };
+    };
+    rules = [
+      "focus=on"
+      "windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on"
+      "windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on"
+      "windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off"
+    ];
+    defaultTag = "1";
+    tags = map (tag: toString tag) (lib.lists.range 1 9);
+  };
+
   services.emacs = {
     enable = true;
     client.enable = true;
@@ -371,7 +515,6 @@ in {
         </match>
       </fontconfig>
     '';
-    configFile."herbstluftwm/autostart".source = ./autostart;
   };
 
   fonts.fontconfig.enable = true;
