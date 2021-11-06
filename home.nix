@@ -59,9 +59,7 @@ in {
     gitAndTools.ghq
     gitAndTools.stgit
 
-    # don't override openssh, as that will cause a rebuild
-    # of several other packages.
-    (pkgs.callPackage ./packages/openssh-term { })
+    unstable.openssh
 
     xclip
 
