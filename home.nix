@@ -58,6 +58,8 @@ in {
     gitAndTools.delta
     gitAndTools.ghq
     gitAndTools.stgit
+    gitAndTools.git-revise
+    unstable.gitAndTools.git-branchless
 
     unstable.openssh
 
