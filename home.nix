@@ -63,6 +63,8 @@ in {
 
     xclip
 
+    file
+    atool
     p7zip
 
     libsForQt5.qtstyleplugin-kvantum
