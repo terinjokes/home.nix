@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
-{
-  imports = [ ../types/work.nix ];
+let unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+in {
+  imports = [ ../types/work.nix ../modules/easyeffects ];
+
+  nixpkgs.overlays = [ (self: super: { easyeffects = unstable.easyeffects; }) ];
 
   home.packages = with pkgs; [
     google-chrome
@@ -138,6 +141,8 @@
       }
     ];
   };
+
+  services.easyeffects.enable = true;
 
   services.polybar = {
     enable = true;
