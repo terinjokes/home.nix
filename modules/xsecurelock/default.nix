@@ -26,7 +26,7 @@ in {
     services.screen-locker = {
       enable = true;
       lockCmd = "${locker}";
-      xssLockExtraOptions = [ "-l" ];
+      xss-lock.extraOptions = [ "-l" ];
     };
   };
 }

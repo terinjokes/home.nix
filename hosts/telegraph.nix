@@ -2,9 +2,7 @@
 
 let unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
 in {
-  imports = [ ../types/work.nix ../modules/easyeffects ];
-
-  nixpkgs.overlays = [ (self: super: { easyeffects = unstable.easyeffects; }) ];
+  imports = [ ../types/work.nix ];
 
   home.packages = with pkgs; [
     google-chrome
@@ -14,7 +12,7 @@ in {
     herbstluftwm
 
     _1password
-    _1password-gui
+    unstable._1password-gui
 
     virt-manager
     minikube
