@@ -235,6 +235,8 @@ in {
     pinentryFlavor = "qt";
   };
 
+  services.pasystray.enable = true;
+
   xresources.properties = {
     "*.foreground" = "#D8DEE9";
     "*.background" = "#2E3440";
