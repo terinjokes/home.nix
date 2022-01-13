@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-let unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+let
+  wallpapers = pkgs.callPackage ../wallpapers.nix { };
+  unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
 in {
   imports = [ ../types/work.nix ];
 
@@ -124,6 +126,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji}"
         ];
       }
       {
@@ -133,6 +136,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2400+0+0"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji}"
         ];
       }
     ];

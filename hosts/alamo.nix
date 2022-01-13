@@ -1,12 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  lucaBG = pkgs.fetchurl {
-    url =
-      "https://archive.fo/170Hd/d44e3a670bd1b8e60a01caf159e145f706aff0f9.jpg";
-    sha1 = "d44e3a670bd1b8e60a01caf159e145f706aff0f9";
-  };
-
+let wallpapers = pkgs.callPackage ../wallpapers.nix { };
 in {
   nixpkgs.overlays = [
     (self: super: { khinsider = super.callPackage ../packages/khinsider { }; })
@@ -136,7 +130,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${lucaBG}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.luca}"
         ];
       }
       {
@@ -146,7 +140,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 2256x1504+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${lucaBG}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.luca}"
         ];
       }
     ];
