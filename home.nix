@@ -408,6 +408,7 @@ in {
       "windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on"
       "windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on"
       "windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off"
+      "class='pinentry' pseudotile=on"
     ];
     defaultTag = "1";
     tags = map (tag: toString tag) (lib.lists.range 1 9);
