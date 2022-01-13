@@ -14,9 +14,7 @@ in {
     _1password
     unstable._1password-gui
 
-    virt-manager
     minikube
-    docker-machine-kvm2
 
     zoom-us
     signal-desktop
