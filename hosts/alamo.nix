@@ -8,6 +8,10 @@ let
   };
 
 in {
+  nixpkgs.overlays = [
+    (self: super: { khinsider = super.callPackage ../packages/khinsider { }; })
+  ];
+
   home.packages = with pkgs; [
     google-chrome
     herbstluftwm
@@ -17,6 +21,8 @@ in {
 
     _1password
     _1password-gui
+
+    khinsider
   ];
 
   services.dunst = {
