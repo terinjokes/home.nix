@@ -11,8 +11,13 @@ let
     lib.strings.splitString " " (lib.concatStringsSep " " extensions);
 
 in {
-  imports =
-    [ ./modules/xsecurelock ./modules/zsh ./modules/herbstluftwm ./hosts ];
+  imports = [
+    ./modules/xsecurelock
+    ./modules/zsh
+    ./modules/herbstluftwm
+    ./modules/keynav
+    ./hosts
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [

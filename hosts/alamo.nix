@@ -110,6 +110,8 @@ in {
     };
   };
 
+  services.keynav.enable = true;
+
   services.gammastep = {
     enable = true;
     provider = "geoclue2";

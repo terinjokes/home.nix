@@ -107,6 +107,8 @@ in {
     };
   };
 
+  services.keynav.enable = true;
+
   services.redshift = {
     enable = true;
     provider = "geoclue2";
