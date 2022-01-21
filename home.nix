@@ -197,6 +197,11 @@ in {
     nix-direnv.enable = true;
   };
 
+  programs.man = {
+    enable = true;
+    generateCaches = true;
+  };
+
   programs.ssh = {
     enable = true;
     controlMaster = "auto";
