@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "khinsider";
-  version = "2.0.2";
+  version = "2.0.4";
 
   nativeBuildInputs = [ makeWrapper ];
 
@@ -10,7 +10,7 @@ buildGoModule rec {
     owner = "marcus-crane";
     repo = "khinsider";
     rev = "v${version}";
-    sha256 = "0r58rk03mdnl0mlckd3xxkvfi68v9dl8snc7xqqgaxqv2y1g88z6";
+    sha256 = "092chvxygb8a4hsd1khl40qgfmf7zwvxfxyxdqkc963fz9aah7lb";
   };
 
   ldflags = [

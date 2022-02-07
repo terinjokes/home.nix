@@ -3,7 +3,11 @@
 let wallpapers = pkgs.callPackage ../wallpapers.nix { };
 in {
   nixpkgs.overlays = [
-    (self: super: { khinsider = super.callPackage ../packages/khinsider { }; })
+    (self: super: {
+      khinsider = super.callPackage ../packages/khinsider {
+        buildGoModule = pkgs.buildGo117Module;
+      };
+    })
   ];
 
   home.packages = with pkgs; [
