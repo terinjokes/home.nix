@@ -129,10 +129,10 @@ in {
     rules = [
       {
         name = "Desk";
-        outputs_connected = [ "DP-3-1" ];
+        outputs_connected = [ "DP-1-1" ];
         outputs_present = [ "eDP-1" ];
-        configure_single = "DP-3-1";
-        primary = "DP-3-1";
+        configure_single = "DP-1-1";
+        primary = "DP-1-1";
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
@@ -165,6 +165,7 @@ in {
 
         font-0 = "Iosevka Aile:size=8;3";
         font-1 = "Sarasa Mono CL:size=8;3";
+        font-2 = "NotoEmoji:scale=13";
         background = "#2E3440";
         foreground = "#D8DEE9";
 
@@ -176,45 +177,29 @@ in {
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
-        modules-right =
-          "backlight pulseaudio-MGXU pulseaudio-HDAudio battery-BAT0 battery-BAT1 date";
+        modules-right = "pulseaudio battery-BAT1 date";
 
         tray-position = "right";
       };
-      "bar/DP-3-1" = {
+      "bar/DP-1-1" = {
         "inherit" = "bar/base";
-        monitor = "DP-3-1";
+        monitor = "DP-1-1";
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
-        modules-right =
-          "pulseaudio-MGXU pulseaudio-HDAudio battery-BAT0 battery-BAT1 date";
+        modules-right = "pulseaudio battery-BAT1 date";
 
         tray-position = "right";
-      };
-      "module/battery-BAT0" = {
-        type = "internal/battery";
-        battery = "BAT0";
-        adapter = "AC";
-        format-charging-underline = "#D8DEE9";
-        format-discharging-underline = "#EBCB8B";
-        format-discharging-foreground = "#EBCB8B";
-        label-full-foreground = "#A3BE8C";
-        label-full-underline = "#A3BE8C";
-        label-charging-margin = 1;
-        label-discharging-margin = 1;
-        label-full-margin = 1;
-        label-charging-padding = 1;
-        label-discharging-padding = 1;
-        label-full-padding = 1;
       };
       "module/battery-BAT1" = {
         type = "internal/battery";
         battery = "BAT1";
-        adapter = "AC";
+        adapter = "ACAD";
+        full-at = 80;
         format-charging-underline = "#D8DEE9";
         format-discharging-underline = "#EBCB8B";
         format-discharging-foreground = "#EBCB8B";
+        label-full = "%percentage_raw%%";
         label-full-foreground = "#A3BE8C";
         label-full-underline = "#A3BE8C";
         label-charging-margin = 1;
@@ -234,20 +219,10 @@ in {
         label-underline = "#88C0D0";
         label-padding = 2;
       };
-      "module/pulseaudio-MGXU" = {
+      "module/pulseaudio" = {
         type = "internal/pulseaudio";
-        sink = "alsa_output.usb-Yamaha_Corporation_MG-XU-00.iec958-stereo";
         use-ui-max = false;
-        format-volume-underline = "#B48EAD";
-        label-muted-padding = 1;
-        label-muted-foreground = "#BF616A";
-        label-muted-underline = "#BF616A";
-        label-volume-padding = 1;
-      };
-      "module/pulseaudio-HDAudio" = {
-        type = "internal/pulseaudio";
-        sink = "alsa_output.pci-0000_00_1f.3.analog-stereo";
-        use-ui-max = false;
+        click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
         format-volume-underline = "#B48EAD";
         label-muted-padding = 1;
         label-muted-foreground = "#BF616A";
@@ -282,7 +257,7 @@ in {
         label-empty = "-- none --";
       };
     };
-    script = "polybar eDP-1 & polybar DP-3-1 &";
+    script = "polybar eDP-1 & polybar DP-1-1 &";
   };
 
   systemd.user.services.yubikey-agent = {
