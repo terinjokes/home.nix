@@ -165,20 +165,8 @@ in {
 
         enable-ipc = true;
       };
-      "bar/eDP-1" = {
+      "bar/top" = {
         "inherit" = "bar/base";
-        monitor = "eDP-1";
-
-        modules-left = "xworkspaces";
-        modules-center = "xwindow";
-        modules-right =
-          "backlight pulseaudio-MGXU pulseaudio-HDAudio battery-BAT0 battery-BAT1 date";
-
-        tray-position = "right";
-      };
-      "bar/DP-3-1" = {
-        "inherit" = "bar/base";
-        monitor = "DP-3-1";
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
@@ -278,7 +266,7 @@ in {
         label-empty = "-- none --";
       };
     };
-    script = "polybar eDP-1 & polybar DP-3-1 &";
+    script = "polybar top &";
   };
 
   systemd.user.services.yubikey-agent = {
