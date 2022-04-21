@@ -34,7 +34,8 @@ in {
         pulseSupport = true;
       };
       google-chrome = unstable.google-chrome.override {
-        commandLineArgs = "--enable-features=WebUIDarkMode --force-dark-mode";
+        commandLineArgs =
+          "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
       kubectx = super.callPackage ./packages/kubectx { };
       _1password-gui = unstable._1password-gui;
