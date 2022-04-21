@@ -120,11 +120,11 @@ in {
       [ "${pkgs.systemd}/bin/systemctl --user restart polybar.service" ];
     rules = [
       {
-        name = "Desk";
-        outputs_connected = [ "DP-3-1" ];
+        name = "Desk TB4";
+        outputs_connected = [ "DP-3" ];
         outputs_present = [ "eDP-1" ];
-        configure_single = "DP-3-1";
-        primary = "DP-3-1";
+        configure_single = "DP-3";
+        primary = "DP-3";
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
