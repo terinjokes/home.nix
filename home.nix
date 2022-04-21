@@ -77,8 +77,13 @@ in {
     xclip
 
     file
-    atool
-    p7zip
+    unzip
+    zip
+    (runCommand "atool-wrapper" { buildInputs = [ makeWrapper ]; } ''
+      makeWrapper ${atool}/bin/atool $out/bin/atool --prefix PATH : ${
+        lib.makeBinPath (with pkgs; [ unzip zip p7zip unrar ])
+      }
+    '')
 
     libsForQt5.qtstyleplugin-kvantum
 
