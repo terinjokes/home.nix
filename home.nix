@@ -240,7 +240,11 @@ in {
         branch = "auto";
         ui = "auto";
       };
-      diff.algorithm = "histogram";
+      merge.conflictStyle = "diff3";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "default";
+      };
       ghq.root = "/home/terin/Development";
     };
   };
