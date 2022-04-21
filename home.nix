@@ -229,6 +229,13 @@ in {
       VisualHostKey yes
     '';
     serverAliveInterval = 60;
+    matchBlocks = {
+      "git.terinstock.com" = {
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
+    };
   };
 
   programs.git = {
