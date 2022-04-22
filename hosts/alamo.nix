@@ -96,17 +96,33 @@ in {
 
   programs.ssh = {
     matchBlocks = {
-      "aur.archlinux.org" = {
-        extraOptions = {
-          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
-        };
-      };
       "github.com" = {
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
       };
       "138.68.58.96" = {
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
+      "srvpi" = {
+        hostname = "100.83.216.39";
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
+      "mullvad" = {
+        hostname = "100.103.120.71";
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
+      "mullvad-boot" = {
+        hostname = "192.168.1.3";
+        port = 2222;
+        proxyJump = "srvpi";
+        user = "root";
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
