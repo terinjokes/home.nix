@@ -62,6 +62,7 @@ in {
     sarasa-gothic
     emacs-all-the-icons-fonts
 
+    editorconfig-core-c
     ripgrep
     fd
     jq
@@ -300,6 +301,7 @@ in {
 
   programs.emacs = {
     enable = true;
+    package = unstable.emacsNativeComp;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
 
