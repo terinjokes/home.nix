@@ -103,19 +103,24 @@ in {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
       };
+      "100.75.69.73" = {
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
       "srvpi" = {
         hostname = "100.83.216.39";
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
       };
-      "mullvad" = {
+      "multivac" = {
         hostname = "100.103.120.71";
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
       };
-      "mullvad-boot" = {
+      "multivac-boot" = {
         hostname = "192.168.1.3";
         port = 2222;
         proxyJump = "srvpi";
