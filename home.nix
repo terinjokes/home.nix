@@ -2,12 +2,6 @@
 
 let
   unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
-  polybarPkgs = import (builtins.fetchGit {
-    name = "polybar-nixpkgs";
-    url = "https://github.com/NixOS/nixpkgs/";
-    ref = "refs/pull/162550/head";
-    rev = "38acc8a5914a67f93b91c146f07f53ed7ee16ef9";
-  }) { config = config.nixpkgs.config; };
   dircolorForExtensions = color: extensions:
     builtins.listToAttrs (builtins.map (name: {
       name = name;
@@ -28,7 +22,7 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (self: super: {
-      polybar = polybarPkgs.polybar.override {
+      polybar = super.polybar.override {
         alsaSupport = false;
         mpdSupport = true;
         pulseSupport = true;

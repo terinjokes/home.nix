@@ -17,9 +17,6 @@ in {
     pavucontrol
     pamixer
 
-    _1password
-    _1password-gui
-
     khinsider
   ];
 
@@ -295,11 +292,13 @@ in {
 
     numlock.enable = true;
 
-    pointerCursor = {
-      name = "Adwaita";
-      package = pkgs.gnome3.adwaita-icon-theme;
-      size = 16;
-    };
+  };
+
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.gnome3.adwaita-icon-theme;
+    size = 16;
+    x11.enable = true;
   };
 
   xdg.mimeApps.defaultApplications = {
