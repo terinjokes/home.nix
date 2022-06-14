@@ -11,4 +11,14 @@
       "https://archive.fo/yHNt4/ee3da86805a82e0a8581c8bc61a8eee1f112baef.jpg";
     sha1 = "ee3da86805a82e0a8581c8bc61a8eee1f112baef";
   };
+  framework-martiandeath = fetchurl {
+    url =
+      "https://archive.fo/FjHGW/5d9a85aaadb99aa122759cd258d677ce572f2689.png";
+    sha1 = "5d9a85aaadb99aa122759cd258d677ce572f2689";
+  };
+  framework-martiandeath-4k = fetchurl {
+    url =
+      "https://archive.fo/pvxfO/23475708b5cdb7b7a77ea34ab4436479bb7167d3.png";
+    sha1 = "23475708b5cdb7b7a77ea34ab4436479bb7167d3";
+  };
 }

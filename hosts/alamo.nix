@@ -152,7 +152,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.luca}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.framework-martiandeath-4k}"
         ];
       }
       {
@@ -162,7 +162,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 2256x1504+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.luca}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.framework-martiandeath}"
         ];
       }
     ];
