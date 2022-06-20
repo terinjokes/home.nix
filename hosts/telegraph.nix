@@ -21,6 +21,11 @@ in {
     zoom-us
     signal-desktop
     xsane
+
+    ghostscript
+    libsForQt5.breeze-icons
+    libsForQt5.kdegraphics-thumbnailers
+    libsForQt5.kio-extras
   ];
 
   services.dunst = {
