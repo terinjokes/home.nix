@@ -133,7 +133,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji-real}"
         ];
       }
       {
@@ -143,7 +143,7 @@ in {
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2400+0+0"
-          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji}"
+          "${pkgs.feh}/bin/feh --bg-fill --no-fehbg ${wallpapers.ryuji-real}"
         ];
       }
     ];

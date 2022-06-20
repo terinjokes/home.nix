@@ -6,10 +6,15 @@
       "https://archive.fo/170Hd/d44e3a670bd1b8e60a01caf159e145f706aff0f9.jpg";
     sha1 = "d44e3a670bd1b8e60a01caf159e145f706aff0f9";
   };
-  ryuji = fetchurl {
+  ryuji-bonk = fetchurl {
     url =
       "https://archive.fo/yHNt4/ee3da86805a82e0a8581c8bc61a8eee1f112baef.jpg";
     sha1 = "ee3da86805a82e0a8581c8bc61a8eee1f112baef";
+  };
+  ryuji-real = fetchurl {
+    url =
+      "https://archive.fo/ByaWT/d76e7e667b14ba835a2150a65a35c8357f38cf84.jpg";
+    sha1 = "d76e7e667b14ba835a2150a65a35c8357f38cf84";
   };
   framework-martiandeath = fetchurl {
     url =
