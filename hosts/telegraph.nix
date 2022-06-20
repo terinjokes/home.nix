@@ -298,12 +298,13 @@ in {
     windowManager.command = "${pkgs.herbstluftwm}/bin/herbstluftwm";
 
     numlock.enable = true;
+  };
 
-    pointerCursor = {
-      name = "Adwaita";
-      package = pkgs.gnome3.adwaita-icon-theme;
-      size = 16;
-    };
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.gnome3.adwaita-icon-theme;
+    size = 16;
+    x11.enable = true;
   };
 
   xdg.mimeApps.defaultApplications = {
