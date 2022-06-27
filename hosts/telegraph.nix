@@ -3,6 +3,7 @@
 let
   wallpapers = pkgs.callPackage ../wallpapers.nix { };
   unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+  nur = import <NUR> { inherit pkgs; };
 in {
   imports = [ ../types/work.nix ];
 
@@ -108,6 +109,52 @@ in {
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
+      };
+    };
+  };
+
+  programs.firefox = {
+    enable = true;
+    package = unstable.firefox.override {
+      cfg = {
+        smartcardSupport = true;
+        enableFXCastBridge = true;
+      };
+    };
+    extensions = with nur.repos.rycee.firefox-addons; [
+      ublock-origin
+      violentmonkey
+      tree-style-tab
+      onepassword-password-manager
+      multi-account-containers
+      temporary-containers
+    ];
+    profiles = {
+      terin = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "app.shield.optoutstudies.enabled" = false;
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.shell.checkDefaultBrowser" = false;
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "dom.security.https_only_mode" = true;
+          "dom.security.https_only_mode_ever_enabled" = true;
+          "extensions.formautofill.addresses.enabled" = false;
+          "extensions.formautofill.creditCards.enabled" = false;
+          "extensions.pocket.enabled" = false;
+          "privacy.trackingprotection.enabled" = true;
+          "privacy.trackingprotection.socialtracking.enabled" = true;
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        };
+        userChrome = ''
+          #TabsToolbar {
+            display: none;
+          }
+        '';
       };
     };
   };
