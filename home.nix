@@ -77,7 +77,7 @@ in {
     zip
     (runCommand "atool-wrapper" { buildInputs = [ makeWrapper ]; } ''
       makeWrapper ${atool}/bin/atool $out/bin/atool --prefix PATH : ${
-        lib.makeBinPath (with pkgs; [ unzip zip p7zip unrar ])
+        lib.makeBinPath (with pkgs; [ dpkg unzip zip p7zip unrar ])
       }
     '')
 
