@@ -89,6 +89,8 @@ in {
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     hunspell
     hunspellDicts.en-us-large
+
+    okular
   ];
 
   programs.dircolors = {
@@ -452,7 +454,12 @@ in {
   xdg = {
     enable = true;
     mime.enable = true;
-    mimeApps.enable = true;
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "org.kde.okular.desktop" ];
+      };
+    };
     configFile."Kvantum/kvantum.kvconfig".text = ''
       [General]
       theme=KvArcDark
