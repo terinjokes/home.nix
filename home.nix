@@ -2,6 +2,7 @@
 
 let
   unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
+  nur = import <NUR> { inherit pkgs; };
   dircolorForExtensions = color: extensions:
     builtins.listToAttrs (builtins.map (name: {
       name = name;
@@ -449,6 +450,65 @@ in {
     enable = true;
     client.enable = true;
     socketActivation.enable = true;
+  };
+
+  programs.firefox = {
+    enable = true;
+    package = unstable.firefox.override {
+      cfg = {
+        smartcardSupport = true;
+        enableFXCastBridge = true;
+      };
+    };
+    extensions = with nur.repos.rycee.firefox-addons; [
+      (pkgs.callPackage ./packages/firefox-addons/containerise {
+        inherit buildFirefoxXpiAddon;
+      })
+      (pkgs.callPackage ./packages/firefox-addons/fx_cast {
+        inherit buildFirefoxXpiAddon;
+      })
+      multi-account-containers
+      onepassword-password-manager
+      temporary-containers
+      tree-style-tab
+      ublock-origin
+      violentmonkey
+    ];
+    profiles = {
+      terin = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "app.shield.optoutstudies.enabled" = false;
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.shell.checkDefaultBrowser" = false;
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "dom.security.https_only_mode" = true;
+          "dom.security.https_only_mode_ever_enabled" = true;
+          "extensions.formautofill.addresses.enabled" = false;
+          "extensions.formautofill.creditCards.enabled" = false;
+          "extensions.pocket.enabled" = false;
+          "media.ffmpeg.vaapi.enabled" = true;
+          "privacy.trackingprotection.enabled" = true;
+          "privacy.trackingprotection.socialtracking.enabled" = true;
+          "privacy.webrtc.legacyGlobalIndicator" = false;
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+          "widget.use-xdg-desktop-portal.mime-handler" = 1;
+        };
+        userChrome = ''
+          #sidebar-header {
+            visibility: collapse !important;
+          }
+          #TabsToolbar {
+            display: none;
+          }
+        '';
+      };
+    };
   };
 
   xdg = {
