@@ -13,9 +13,6 @@ in {
     pamixer
     herbstluftwm
 
-    _1password
-    unstable._1password-gui
-
     minikube
 
     zoom-us
