@@ -4,6 +4,36 @@ let
   wallpapers = pkgs.callPackage ../wallpapers.nix { };
   unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
   nur = import <NUR> { inherit pkgs; };
+  ff-containerise = nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon {
+    pname = "containerise";
+    version = "3.9.0";
+    addonId = "containerise@kinte.sh";
+    url =
+      "https://addons.mozilla.org/firefox/downloads/file/3724805/containerise-3.9.0.xpi";
+    sha256 = "bf511aa160512c5ece421d472977973d92e1609a248020e708561382aa10d1e5";
+    meta = with lib; {
+      homepage = "https://github.com/kintesh/containerise";
+      description =
+        "Automatically open websites in a dedicated container. Simply add rules to map domain or subdomain to your container.";
+      license = licenses.mit;
+      platforms = platforms.all;
+    };
+  };
+  ff-fx_cast = nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon {
+    pname = "fx_cast";
+    version = "0.2.0";
+    addonId = "fx_cast@matt.tf";
+    url =
+      "https://github.com/hensm/fx_cast/releases/download/v0.2.0/fx_cast-0.2.0-fx.xpi";
+    sha256 = "a8344e30a7111b772f9d0ba43bd2368e8a67575c0646b98cd8d3c4bc782beae3";
+    meta = with lib; {
+      homepage = "https://hensm.github.io/fx_cast/";
+      description =
+        "A browser extension that enables Chromecast support for casting web apps";
+      license = licenses.mit;
+      platforms = platforms.all;
+    };
+  };
 in {
   imports = [ ../types/work.nix ];
 
@@ -122,12 +152,14 @@ in {
       };
     };
     extensions = with nur.repos.rycee.firefox-addons; [
+      ff-containerise
+      ff-fx_cast
+      multi-account-containers
+      onepassword-password-manager
+      temporary-containers
+      tree-style-tab
       ublock-origin
       violentmonkey
-      tree-style-tab
-      onepassword-password-manager
-      multi-account-containers
-      temporary-containers
     ];
     profiles = {
       terin = {
@@ -146,11 +178,18 @@ in {
           "extensions.formautofill.addresses.enabled" = false;
           "extensions.formautofill.creditCards.enabled" = false;
           "extensions.pocket.enabled" = false;
+          "media.ffmpeg.vaapi.enabled" = true;
           "privacy.trackingprotection.enabled" = true;
           "privacy.trackingprotection.socialtracking.enabled" = true;
+          "privacy.webrtc.legacyGlobalIndicator" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+          "widget.use-xdg-desktop-portal.mime-handler" = 1;
         };
         userChrome = ''
+          #sidebar-header {
+            visibility: collapse !important;
+          }
           #TabsToolbar {
             display: none;
           }
