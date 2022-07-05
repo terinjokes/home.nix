@@ -473,6 +473,7 @@ in {
       tree-style-tab
       ublock-origin
       violentmonkey
+      web-scrobbler
     ];
     profiles = {
       terin = {
@@ -483,6 +484,7 @@ in {
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.shell.checkDefaultBrowser" = false;
+          "browser.tabs.unloadOnLowMemory" = false;
           "browser.toolbars.bookmarks.visibility" = "never";
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
           "datareporting.healthreport.uploadEnabled" = false;
@@ -509,6 +511,23 @@ in {
         '';
       };
     };
+  };
+  xdg.desktopEntries.firefox = {
+    name = "Firefox";
+    categories = [ "Network" "WebBrowser" ];
+    genericName = "Web Browser";
+    icon = "firefox";
+    exec = "${config.programs.firefox.package}/bin/firefox %U";
+    type = "Application";
+    mimeType = [
+      "text/html"
+      "text/xml"
+      "application/xhtml+xml"
+      "application/vnd.mozilla.xul+xml"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/ftp"
+    ];
   };
 
   xdg = {

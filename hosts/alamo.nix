@@ -84,6 +84,7 @@ in {
     enable = true;
     theme = "Arc-Dark";
     extraConfig = {
+      drun-show-actions = true;
       show-icons = true;
       modi = "drun,run";
     };
