@@ -33,7 +33,8 @@ in {
           "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
       kubectx = super.callPackage ./packages/kubectx { };
-      _1password-gui = unstable._1password-gui;
+      oauth2token = super.callPackage ./packages/oauth2token { };
+      cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
     })
   ];
 
@@ -93,6 +94,7 @@ in {
     hunspellDicts.en-us-large
 
     okular
+    oauth2token
   ];
 
   programs.dircolors = {
