@@ -162,7 +162,9 @@ in {
         module-margin = 1;
 
         font-0 = "Iosevka Aile:size=8;3";
-        font-1 = "Sarasa Mono CL:size=8;3";
+        font-1 = "Sarasa Mono CL:size=8";
+        font-2 = "Noto Emoji:scale=13";
+        font-3 = "FontAwesome:size=8";
         background = "#2E3440";
         foreground = "#D8DEE9";
 
@@ -173,30 +175,28 @@ in {
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
-        modules-right =
-          "pulseaudio-MGXU pulseaudio-HDAudio battery-BAT0 battery-BAT1 date";
-
+        modules-right = "info-unread pulseaudio battery date";
         tray-position = "right";
       };
-      "module/battery-BAT0" = {
+      "module/info-unread" = {
+        type = "custom/script";
+        exec = "${
+            pkgs.writeShellApplication {
+              name = "info-maildir-unread";
+              runtimeInputs = with pkgs; [ mblaze coreutils ];
+              text = ''
+                count=$(mdirs -a ~/Maildir | mlist -s | wc -l)
+                [ "$count" -gt 0 ] && printf '\uf0e0 %s\n' "$count" && exit
+                printf '\n'
+              '';
+            }
+          }/bin/info-maildir-unread";
+        label-foreground = "#BF616A";
+        label-underline = "#BF616A";
+      };
+      "module/battery" = {
         type = "internal/battery";
         battery = "BAT0";
-        adapter = "AC";
-        format-charging-underline = "#D8DEE9";
-        format-discharging-underline = "#EBCB8B";
-        format-discharging-foreground = "#EBCB8B";
-        label-full-foreground = "#A3BE8C";
-        label-full-underline = "#A3BE8C";
-        label-charging-margin = 1;
-        label-discharging-margin = 1;
-        label-full-margin = 1;
-        label-charging-padding = 1;
-        label-discharging-padding = 1;
-        label-full-padding = 1;
-      };
-      "module/battery-BAT1" = {
-        type = "internal/battery";
-        battery = "BAT1";
         adapter = "AC";
         format-charging-underline = "#D8DEE9";
         format-discharging-underline = "#EBCB8B";
@@ -220,20 +220,8 @@ in {
         label-underline = "#88C0D0";
         label-padding = 2;
       };
-      "module/pulseaudio-MGXU" = {
+      "module/pulseaudio" = {
         type = "internal/pulseaudio";
-        sink = "alsa_output.usb-Yamaha_Corporation_MG-XU-00.iec958-stereo";
-        use-ui-max = false;
-        format-volume-underline = "#B48EAD";
-        label-muted-padding = 1;
-        label-muted-foreground = "#BF616A";
-        label-muted-underline = "#BF616A";
-        label-volume-padding = 1;
-      };
-      "module/pulseaudio-HDAudio" = {
-        type = "internal/pulseaudio";
-        sink =
-          "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         use-ui-max = false;
         format-volume-underline = "#B48EAD";
         label-muted-padding = 1;
