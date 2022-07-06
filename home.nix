@@ -56,6 +56,7 @@ in {
     (iosevka-bin.override { variant = "aile"; })
     sarasa-gothic
     emacs-all-the-icons-fonts
+    (pkgs.callPackage ./packages/fonts/material-icons { })
 
     editorconfig-core-c
     ripgrep

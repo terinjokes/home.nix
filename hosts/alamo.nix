@@ -184,7 +184,8 @@ in {
 
         font-0 = "Iosevka Aile:size=8;3";
         font-1 = "Sarasa Mono CL:size=8;3";
-        font-2 = "NotoEmoji:scale=13";
+        font-2 = "Noto Emoji:scale=13";
+        font-3 = "Material Icons Round:size=10;3";
         background = "#2E3440";
         foreground = "#D8DEE9";
 
@@ -195,9 +196,57 @@ in {
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
-        modules-right = "pulseaudio battery-BAT1 date";
+        modules-right = "pulseaudio battery-BAT1 wireless-network date";
 
         tray-position = "right";
+      };
+      "bar/bottom" = {
+        "inherit" = "bar/base";
+        bottom = true;
+
+        modules-right = "baywheels";
+      };
+      "module/baywheels" = {
+        type = "custom/script";
+        exec = let
+          filter = pkgs.writeTextFile {
+            name = "baywheels-jq-filter";
+            text = ''
+              .data.stations|map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0] |
+              {bikes: (.num_bikes_available-.num_ebikes_available), ebikes: .num_ebikes_available} |
+              "%{T4}\ueb29%{T-} \(.bikes) %{T4}\uea0b%{T-} \(.ebikes)"
+            '';
+          };
+        in "${
+          pkgs.writeShellApplication {
+            name = "info-baywheels";
+            runtimeInputs = with pkgs; [ curl jq ];
+            text = ''
+              curl -Ss https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com" |\
+                jq -r -f ${filter}
+            '';
+          }
+        }/bin/info-baywheels";
+        interval = 60;
+        label-overline = "#88C0D0";
+        label-margin = 1;
+        label-padding = 2;
+      };
+      "module/wireless-network" = {
+        type = "internal/network";
+        interface-type = "wireless";
+        format-connected = "<ramp-signal> <label-connected>";
+        label-connected = "%essid%";
+
+        format-connected-underline = "#88C0D0";
+        format-connected-margin = 1;
+        format-connected-padding = 2;
+
+        ramp-signal-0 = "%{T4}%{T-}";
+        ramp-signal-1 = "%{T4}%{T-}";
+        ramp-signal-2 = "%{T4}%{T-}";
+        ramp-signal-3 = "%{T4}%{T-}";
+        ramp-signal-4 = "%{T4}%{T-}";
       };
       "module/battery-BAT1" = {
         type = "internal/battery";
@@ -265,7 +314,10 @@ in {
         label-empty = "-- none --";
       };
     };
-    script = "polybar top &";
+    script = ''
+      polybar top &
+      polybar bottom &
+    '';
   };
 
   systemd.user.services.yubikey-agent = {
