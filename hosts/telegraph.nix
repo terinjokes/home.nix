@@ -7,7 +7,6 @@ in {
   imports = [ ../types/work.nix ];
 
   home.packages = with pkgs; [
-    google-chrome
     pavucontrol
 
     pamixer
@@ -50,7 +49,7 @@ in {
         icon_position = "left";
         max_icon_size = 64;
         dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p dunst";
-        browser = "${pkgs.google-chrome}/bin/google-chrome-stable";
+        browser = "${config.programs.firefox.package}/bin/firefox";
       };
       shortcuts = {
         close = "ctrl+space";
@@ -299,10 +298,10 @@ in {
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/http" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/https" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/about" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
+    "text/html" = [ "firefox.desktop" ];
+    "x-scheme-handler/http" = [ "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "firefox.desktop" ];
+    "x-scheme-handler/about" = [ "firefox.desktop" ];
+    "x-scheme-handler/unknown" = [ "firefox.desktop" ];
   };
 }
