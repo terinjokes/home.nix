@@ -64,6 +64,64 @@ in {
       };
     };
   };
+
+  accounts.email.accounts.terinjokes = {
+    address = "terinjokes@gmail.com";
+    flavor = "gmail.com";
+    primary = true;
+    passwordCommand = "${pkgs.oauth2token}/bin/oauth2get gmail terinjokes";
+    mbsync = {
+      enable = true;
+      create = "maildir";
+      extraConfig.account = { AuthMechs = "XOAUTH2"; };
+      groups = {
+        gmail = {
+          channels = {
+            default = {
+              farPattern = "INBOX";
+              nearPattern = "local";
+              extraConfig.Create = "Near";
+            };
+            sent = {
+              farPattern = "[Gmail]/Sent Mail";
+              nearPattern = "sent";
+              extraConfig.Create = "Near";
+            };
+            trash = {
+              farPattern = "[Gmail]/Trash";
+              nearPattern = "trash";
+              extraConfig.Create = "Near";
+            };
+          };
+        };
+      };
+    };
+  };
+  programs.mbsync = {
+    enable = true;
+    package = (pkgs.runCommand "isync-wrapper" {
+      buildInputs = [ pkgs.makeWrapper ];
+    } ''
+      makeWrapper ${pkgs.isync}/bin/mbsync $out/bin/mbsync \
+        --prefix SASL_PATH : "${pkgs.cyrus_sasl.out}/lib/sasl2:${pkgs.cyrus-sasl-xoauth2}/lib/sasl2"
+    '');
+  };
+
+  xdg.configFile = {
+    "oauth2token/gmail/config.json".source =
+      (pkgs.formats.json { }).generate "config" {
+        web = {
+          client_id =
+            "406964657835-aq8lmia8j95dhl1a2bvharmfk3t1hgqj.apps.googleusercontent.com";
+          client_secret = "kSmqreRr0qwBWJgbf5Y-PjSU";
+          auth_uri = "https://accounts.google.com/o/oauth2/auth";
+          token_uri = "https://www.googleapis.com/oauth2/v3/token";
+        };
+      };
+    "oauth2token/gmail/scopes.json".source =
+      (pkgs.formats.json { }).generate "scopes" [ "https://mail.google.com/" ];
+  };
+
   services.dunst = {
     enable = true;
     settings = {
