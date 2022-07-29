@@ -48,11 +48,12 @@ in {
         commandLineArgs =
           "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
+      oil = unstable.oil;
       kubectx = super.callPackage ./packages/kubectx { };
       _1password-gui = unstable._1password-gui;
       oauth2token = super.callPackage ./packages/oauth2token { };
       cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
-      oil = unstable.oil;
+      jaro = super.callPackage ./packages/jaro { };
     })
   ];
 
@@ -65,6 +66,11 @@ in {
   home.homeDirectory = "/home/terin";
 
   home.packages = with pkgs; [
+    jaro
+    (pkgs.runCommand "xdg-open" { } ''
+      mkdir -p $out/bin
+      ln -s ${pkgs.jaro}/bin/jaro $out/bin/xdg-open
+    '')
     dconf
 
     moreutils
@@ -657,6 +663,7 @@ in {
         </match>
       </fontconfig>
     '';
+    configFile."associations".source = ./assocations.scm;
   };
 
   fonts.fontconfig.enable = true;
