@@ -177,6 +177,14 @@ in {
     };
   };
 
+  services.syncthing = {
+    enable = true;
+    tray = {
+      enable = true;
+      command = "syncthingtray --wait";
+    };
+  };
+
   services.keynav.enable = true;
 
   services.gammastep = {
@@ -192,10 +200,10 @@ in {
     rules = [
       {
         name = "Desk";
-        outputs_connected = [ "DP-1-1" ];
+        outputs_connected = [ "DP-1" ];
         outputs_present = [ "eDP-1" ];
-        configure_single = "DP-1-1";
-        primary = "DP-1-1";
+        configure_single = "DP-1";
+        primary = "DP-1";
         atomic = true;
         execute_after = [
           "${pkgs.herbstluftwm}/bin/herbstclient set_monitors 3840x2160+0+0"
@@ -362,6 +370,11 @@ in {
       polybar top &
       polybar bottom &
     '';
+  };
+
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
   };
 
   systemd.user.services.yubikey-agent = {

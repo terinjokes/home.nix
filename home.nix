@@ -87,7 +87,8 @@ in {
     gitAndTools.ghq
     gitAndTools.stgit
     gitAndTools.git-revise
-    unstable.gitAndTools.git-branchless
+    (unstable.gitAndTools.git-branchless.overrideAttrs
+      (old: rec { doCheck = false; }))
 
     unstable.openssh
 
@@ -112,7 +113,7 @@ in {
     hunspellDicts.en-us-large
 
     okular
-    oauth2token
+    unstable.chatterino2
   ];
 
   programs.dircolors = {
