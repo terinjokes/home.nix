@@ -11,7 +11,6 @@ in {
   ];
 
   home.packages = with pkgs; [
-    google-chrome
     herbstluftwm
 
     pavucontrol
@@ -20,6 +19,51 @@ in {
     khinsider
   ];
 
+  programs.firefox = {
+    profiles = {
+      private = {
+        id = 1;
+        settings = {
+          "app.shield.optoutstudies.enabled" = false;
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.shell.checkDefaultBrowser" = false;
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "dom.security.https_only_mode" = true;
+          "dom.security.https_only_mode_ever_enabled" = true;
+          "extensions.formautofill.addresses.enabled" = false;
+          "extensions.formautofill.creditCards.enabled" = false;
+          "extensions.pocket.enabled" = false;
+          "media.ffmpeg.vaapi.enabled" = true;
+          "privacy.trackingprotection.enabled" = true;
+          "privacy.trackingprotection.socialtracking.enabled" = true;
+          "privacy.webrtc.legacyGlobalIndicator" = false;
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+          "widget.use-xdg-desktop-portal.mime-handler" = 1;
+        };
+        userChrome = ''
+          #sidebar-header {
+            visibility: collapse !important;
+          }
+          #TabsToolbar {
+            display: none;
+          }
+        '';
+      };
+    };
+  };
+  xdg.desktopEntries.firefox = {
+    actions = {
+      secondary-profile = {
+        exec = "${config.programs.firefox.package}/bin/firefox -P private";
+        icon = "firefox";
+        name = "Secondary Profile";
+      };
+    };
+  };
   services.dunst = {
     enable = true;
     settings = {
@@ -45,7 +89,7 @@ in {
         icon_position = "left";
         max_icon_size = 64;
         dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p dunst";
-        browser = "${pkgs.google-chrome}/bin/google-chrome-stable";
+        browser = "${config.programs.firefox.package}/bin/firefox";
       };
       shortcuts = {
         close = "ctrl+space";
@@ -360,10 +404,10 @@ in {
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/http" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/https" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/about" = [ "google-chrome.desktop" ];
-    "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
+    "text/html" = [ "firefox.desktop" ];
+    "x-scheme-handler/http" = [ "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "firefox.desktop" ];
+    "x-scheme-handler/about" = [ "firefox.desktop" ];
+    "x-scheme-handler/unknown" = [ "firefox.desktop" ];
   };
 }
