@@ -23,6 +23,22 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (self: super: {
+      writeOSHApplication = { name, text, runtimeInputs ? [ ] }:
+        pkgs.writeTextFile {
+          inherit name;
+          executable = true;
+          destination = "/bin/${name}";
+          text = ''
+            #!${pkgs.oil}/bin/osh
+            shopt --set oil:upgrade strict:all
+
+            export PATH="${lib.makeBinPath runtimeInputs}:$PATH"
+
+            ${text}
+          '';
+
+          meta.mainProgram = name;
+        };
       polybar = super.polybar.override {
         alsaSupport = false;
         mpdSupport = true;
@@ -33,8 +49,10 @@ in {
           "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
       kubectx = super.callPackage ./packages/kubectx { };
+      _1password-gui = unstable._1password-gui;
       oauth2token = super.callPackage ./packages/oauth2token { };
       cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
+      oil = unstable.oil;
     })
   ];
 

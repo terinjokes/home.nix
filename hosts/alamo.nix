@@ -218,11 +218,11 @@ in {
             '';
           };
         in "${
-          pkgs.writeShellApplication {
+          pkgs.writeOSHApplication {
             name = "info-baywheels";
             runtimeInputs = with pkgs; [ curl jq ];
             text = ''
-              curl -Ss https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com" |\
+              curl -Ss --fail https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com" |\
                 jq -r -f ${filter}
             '';
           }
