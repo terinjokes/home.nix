@@ -22,6 +22,8 @@ in {
     libsForQt5.breeze-icons
     libsForQt5.kdegraphics-thumbnailers
     libsForQt5.kio-extras
+    libsForQt5.spectacle
+
   ];
 
   services.dunst = {
@@ -96,6 +98,12 @@ in {
 
   programs.ssh = {
     matchBlocks = {
+      "srvpi" = {
+        hostname = "192.168.2.10";
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
       "github.com" = {
         extraOptions = {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
@@ -114,6 +122,11 @@ in {
   services.redshift = {
     enable = true;
     provider = "geoclue2";
+  };
+
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
   };
 
   services.grobi = {
