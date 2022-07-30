@@ -199,25 +199,21 @@ in {
       };
       "module/baywheels" = {
         type = "custom/script";
-        exec = let
-          filter = pkgs.writeTextFile {
-            name = "baywheels-jq-filter";
-            text = ''
-              .data.stations|map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0] |
-              {bikes: (.num_bikes_available-.num_ebikes_available), ebikes: .num_ebikes_available} |
-              "%{T4}\ueb29%{T-} \(.bikes) %{T4}\uea0b%{T-} \(.ebikes)"
-            '';
-          };
-        in "${
-          pkgs.writeShellApplication {
-            name = "info-baywheels";
-            runtimeInputs = with pkgs; [ curl jq ];
-            text = ''
-              curl -Ss https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com" |\
-                jq -r -f ${filter}
-            '';
-          }
-        }/bin/info-baywheels";
+        exec = "${
+            pkgs.writeOSHApplication {
+              name = "info-baywheels";
+              runtimeInputs = with pkgs; [ curl jq ];
+              text = ''
+                ... curl -Ss --fail https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com"
+                  | jq -r '.data.stations | map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0]'
+                  | json read :station
+                  ;
+                ... write --sep ' ' "%{T4}%{T-} $[station->num_bikes_available - station->num_ebikes_available]"
+                    "%{T4}%{T-} $[station->num_ebikes_available]"
+                  ;
+              '';
+            }
+          }/bin/info-baywheels";
         interval = 60;
         label-overline = "#88C0D0";
         label-margin = 1;
@@ -242,13 +238,14 @@ in {
       "module/info-unread" = {
         type = "custom/script";
         exec = "${
-            pkgs.writeShellApplication {
+            pkgs.writeOSHApplication {
               name = "info-maildir-unread";
               runtimeInputs = with pkgs; [ mblaze coreutils ];
               text = ''
-                count=$(mdirs -a ~/Maildir | mlist -s | wc -l)
-                [ "$count" -gt 0 ] && printf '%%{T4}\uf18a%%{T-} %s\n' "$count" && exit
-                printf '\n'
+                var count = $(mdirs -a ~/Maildir | mlist -s | wc -l)
+                if (count > 0) {
+                  printf "%%{T4}%s%%{T-} %d\n" $'\uf18a' $count
+                }
               '';
             }
           }/bin/info-maildir-unread";
