@@ -306,7 +306,8 @@ in {
 
         modules-left = "xworkspaces";
         modules-center = "xwindow";
-        modules-right = "pulseaudio battery-BAT1 wireless-network date";
+        modules-right =
+          "pulseaudio info-kdeconnect-battery battery-BAT1 wireless-network date";
 
         tray-position = "right";
       };
@@ -337,6 +338,36 @@ in {
         label-overline = "#88C0D0";
         label-margin = 1;
         label-padding = 2;
+      };
+      "module/info-kdeconnect-battery" = {
+        type = "custom/script";
+        exec = "${
+            pkgs.writeOSHApplication {
+              name = "info-kdeconnect-battery";
+              runtimeInputs = with pkgs; [ systemd ];
+              text = ''
+                var device_id = "ab6a66e7ec2c7c18"
+                ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id org.kde.kdeconnect.device isReachable
+                  | json read :info
+                  ;
+
+                if (not info->data) {
+                  echo ""
+                  exit 0
+                }
+
+                ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id/battery org.kde.kdeconnect.device.battery charge
+                  | json read :info
+                  ;
+
+                write --sep "" "%{T4}%{T-}" $[info->data] "%"
+              '';
+            }
+          }/bin/info-kdeconnect-battery";
+        interval = 60;
+        label-margin = 1;
+        label-padding = 2;
+        label-underline = "#88C0D0";
       };
       "module/wireless-network" = {
         type = "internal/network";
