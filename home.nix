@@ -49,7 +49,9 @@ in {
           "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
       oil = unstable.oil;
-      kubectx = super.callPackage ./packages/kubectx { };
+      kubectl = super.callPackage ./packages/kubectl {
+        buildGoModule = pkgs.buildGo118Module;
+      };
       _1password-gui = unstable._1password-gui;
       oauth2token = super.callPackage ./packages/oauth2token { };
       cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
