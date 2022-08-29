@@ -486,7 +486,7 @@ in {
     enable = true;
     package = unstable.firefox.override {
       cfg = {
-        smartcardSupport = true;
+        smartcardSupport = false;
         enableFXCastBridge = true;
       };
     };
@@ -499,6 +499,7 @@ in {
       })
       multi-account-containers
       onepassword-password-manager
+      stylus
       temporary-containers
       tree-style-tab
       ublock-origin
