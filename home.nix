@@ -122,6 +122,8 @@ in {
 
     okular
     unstable.chatterino2
+    streamlink
+    mpc-qt
   ];
 
   programs.dircolors = {
