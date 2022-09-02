@@ -320,14 +320,24 @@ in {
       "module/baywheels" = {
         type = "custom/script";
         exec = "${
-            pkgs.writeOSHApplication {
+            pkgs.writeOilApplication {
               name = "info-baywheels";
               runtimeInputs = with pkgs; [ curl jq ];
               text = ''
-                ... curl -Ss --fail https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com"
-                  | jq -r '.data.stations | map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0]'
-                  | json read :station
-                  ;
+                fopen 2> /dev/null {
+                  try {
+                    ... curl -Ss --fail https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com"
+                      | jq -r '.data.stations | map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0]'
+                      | json read :station
+                      ;
+                  }
+                }
+
+                if (_status !== 0) {
+                   echo ""
+                   exit 0
+                }
+
                 ... write --sep ' ' "%{T4}%{T-} $[station->num_bikes_available - station->num_ebikes_available]"
                     "%{T4}%{T-} $[station->num_ebikes_available]"
                   ;
@@ -342,23 +352,39 @@ in {
       "module/info-kdeconnect-battery" = {
         type = "custom/script";
         exec = "${
-            pkgs.writeOSHApplication {
+            pkgs.writeOilApplication {
               name = "info-kdeconnect-battery";
               runtimeInputs = with pkgs; [ systemd ];
               text = ''
                 var device_id = "ab6a66e7ec2c7c18"
-                ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id org.kde.kdeconnect.device isReachable
-                  | json read :info
-                  ;
+                fopen 2> /dev/null {
+                  try {
+                    ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id org.kde.kdeconnect.device isReachable
+                      | json read :info
+                      ;
+                  }
+                }
 
-                if (not info->data) {
+                if (_status !== 0) {
+                  echo ""
+                  exit 0
+                } elif (not info->data) {
                   echo ""
                   exit 0
                 }
 
-                ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id/battery org.kde.kdeconnect.device.battery charge
-                  | json read :info
-                  ;
+                fopen 2> /dev/null {
+                  try {
+                    ... busctl --user --json=short get-property org.kde.kdeconnect /modules/kdeconnect/devices/$device_id/battery org.kde.kdeconnect.device.battery charge
+                      | json read :info
+                      ;
+                  }
+                }
+
+                if (_status !== 0) {
+                  echo ""
+                  exit 0
+                }
 
                 write --sep "" "%{T4}%{T-}" $[info->data] "%"
               '';

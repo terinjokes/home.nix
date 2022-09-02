@@ -23,15 +23,13 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (self: super: {
-      writeOSHApplication = { name, text, runtimeInputs ? [ ] }:
+      writeOilApplication = { name, text, runtimeInputs ? [ ] }:
         pkgs.writeTextFile {
           inherit name;
           executable = true;
           destination = "/bin/${name}";
           text = ''
-            #!${pkgs.oil}/bin/osh
-            shopt --set oil:upgrade strict:all
-
+            #!${pkgs.oil}/bin/oil
             export PATH="${lib.makeBinPath runtimeInputs}:$PATH"
 
             ${text}
