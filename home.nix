@@ -48,7 +48,7 @@ in {
       };
       oil = unstable.oil;
       kubectl = super.callPackage ./packages/kubectl {
-        buildGoModule = pkgs.buildGo118Module;
+        buildGoModule = unstable.buildGo119Module;
       };
       _1password-gui = unstable._1password-gui;
       oauth2token = super.callPackage ./packages/oauth2token { };
@@ -66,6 +66,7 @@ in {
   home.homeDirectory = "/home/terin";
 
   home.packages = with pkgs; [
+    comma
     jaro
     (pkgs.runCommand "xdg-open" { } ''
       mkdir -p $out/bin
@@ -91,10 +92,7 @@ in {
     git
     gitAndTools.delta
     gitAndTools.ghq
-    gitAndTools.stgit
-    gitAndTools.git-revise
-    (unstable.gitAndTools.git-branchless.overrideAttrs
-      (old: rec { doCheck = false; }))
+    unstable.gitAndTools.git-branchless
 
     unstable.openssh
 
@@ -105,8 +103,8 @@ in {
     zip
     (runCommand "atool-wrapper" { buildInputs = [ makeWrapper ]; } ''
       makeWrapper ${atool}/bin/atool $out/bin/atool --prefix PATH : ${
-        lib.makeBinPath (with pkgs; [ dpkg unzip zip p7zip unrar ])
-      }
+        lib.makeBinPath (with pkgs; [ dpkg unzip zip p7zip rar ])
+      } --add-flags --option=use_rar_for_unpack=1
     '')
 
     libsForQt5.qtstyleplugin-kvantum
@@ -118,10 +116,12 @@ in {
     hunspell
     hunspellDicts.en-us-large
 
-    okular
+    unstable.okular
     unstable.chatterino2
     streamlink
     mpc-qt
+
+    nodePackages.yaml-language-server
   ];
 
   programs.dircolors = {

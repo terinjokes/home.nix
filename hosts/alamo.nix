@@ -315,39 +315,7 @@ in {
         "inherit" = "bar/base";
         bottom = true;
 
-        modules-right = "baywheels";
-      };
-      "module/baywheels" = {
-        type = "custom/script";
-        exec = "${
-            pkgs.writeOilApplication {
-              name = "info-baywheels";
-              runtimeInputs = with pkgs; [ curl jq ];
-              text = ''
-                fopen 2> /dev/null {
-                  try {
-                    ... curl -Ss --fail https://gbfs.baywheels.com/gbfs/en/station_status.json -H"User-Agent: https://terinstock.com"
-                      | jq -r '.data.stations | map(select(.station_id=="930fe54f-5572-4900-8910-6041386560bf"))[0]'
-                      | json read :station
-                      ;
-                  }
-                }
-
-                if (_status !== 0) {
-                   echo ""
-                   exit 0
-                }
-
-                ... write --sep ' ' "%{T4}%{T-} $[station->num_bikes_available - station->num_ebikes_available]"
-                    "%{T4}%{T-} $[station->num_ebikes_available]"
-                  ;
-              '';
-            }
-          }/bin/info-baywheels";
-        interval = 60;
-        label-overline = "#88C0D0";
-        label-margin = 1;
-        label-padding = 2;
+        modules-right = "";
       };
       "module/info-kdeconnect-battery" = {
         type = "custom/script";
