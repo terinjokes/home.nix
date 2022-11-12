@@ -525,6 +525,7 @@ in {
           "extensions.formautofill.creditCards.enabled" = false;
           "extensions.pocket.enabled" = false;
           "media.ffmpeg.vaapi.enabled" = true;
+          "media.setsinkid.enabled" = true;
           "privacy.trackingprotection.enabled" = true;
           "privacy.trackingprotection.socialtracking.enabled" = true;
           "privacy.webrtc.legacyGlobalIndicator" = false;

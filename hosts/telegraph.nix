@@ -222,7 +222,7 @@ in {
               text = ''
                 var count = $(mdirs -a ~/Maildir | mlist -s | wc -l)
                 if (count !== "0") {
-                  printf "%%{T4}%s%%{T-} %d\n" $'\uf18a' $count
+                  printf '%%{T4}%s%%{T-} %d\n' $'\uf18a' $count
                 } else {
                   echo ""
                 }
