@@ -191,7 +191,7 @@ in {
     enable = true;
     settings = {
       env.TERM = "alacritty-direct";
-      font.normal.family = "Iosevka";
+      font.normal.family = "Berkeley Mono";
       font.size = 10;
       colors = {
         primary = {
@@ -321,8 +321,8 @@ in {
     "*.color14" = "#8FBCBB";
     "*.color15" = "#ECEFF4";
     "Xft.dpi" = 96;
-    "xterm*faceName" = "Iosevka";
-    "xterm*faceSize" = 8;
+    "xterm*faceName" = "Berkeley Mono";
+    "xterm*faceSize" = 10;
     "xterm*renderFont" = true;
   };
 

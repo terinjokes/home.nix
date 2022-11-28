@@ -292,7 +292,7 @@ in {
         padding = 0;
         module-margin = 1;
 
-        font-0 = "Iosevka Aile:size=8;3";
+        font-0 = "Berkeley Mono Variable:size=8;3";
         font-1 = "Sarasa Mono CL:size=8;3";
         font-2 = "Noto Emoji:scale=13";
         font-3 = "Material Icons Round:size=10;3";
