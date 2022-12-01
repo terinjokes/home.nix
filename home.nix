@@ -122,6 +122,12 @@ in {
     mpc-qt
 
     nodePackages.yaml-language-server
+
+    ghostscript
+    libsForQt5.breeze-icons
+    libsForQt5.kdegraphics-thumbnailers
+    libsForQt5.kio-extras
+    libsForQt5.spectacle
   ];
 
   programs.dircolors = {
@@ -328,7 +334,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = unstable.emacsNativeComp;
+    package = unstable.emacs-gtk;
     extraPackages = epkgs: [ epkgs.vterm ];
   };
 
@@ -510,6 +516,10 @@ in {
       terin = {
         id = 0;
         isDefault = true;
+        search = {
+          default = "DuckDuckGo";
+          force = true;
+        };
         settings = {
           "app.shield.optoutstudies.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
