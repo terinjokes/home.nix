@@ -3,13 +3,13 @@
 
 buildGoModule rec {
   pname = "kubectl";
-  version = "1.25.3";
+  version = "1.26.0";
 
   src = fetchFromGitHub {
     owner = "kubernetes";
     repo = "kubernetes";
     rev = "v${version}";
-    sha256 = "sha256-UDulyX1PXyAe4cqtekOY1nmQnmMqVLFuHnCswFfE6v0=";
+    sha256 = "sha256-tdt5F6KCsIPurkwG9acOHvm1tV2ERBNYtcvheJR+wLA=";
   };
 
   vendorSha256 = null;
