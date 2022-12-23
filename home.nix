@@ -503,6 +503,9 @@ in {
       (pkgs.callPackage ./packages/firefox-addons/fx_cast {
         inherit buildFirefoxXpiAddon;
       })
+      (pkgs.callPackage ./packages/firefox-addons/simple-translate {
+        inherit buildFirefoxXpiAddon;
+      })
       multi-account-containers
       onepassword-password-manager
       stylus
