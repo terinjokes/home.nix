@@ -37,6 +37,17 @@ in {
 
           meta.mainProgram = name;
         };
+      writeBabashkaApplication = { name, text, runtimeInputs ? [ ] }:
+        let script = pkgs.writeText "script.clj" text;
+        in pkgs.writeShellApplication {
+          inherit name runtimeInputs;
+          text = ''
+            ${pkgs.babashka}/bin/bb ${script} $@
+          '';
+          checkPhase = ''
+            ${pkgs.clj-kondo}/bin/clj-kondo --lint ${script}
+          '';
+        };
       polybar = super.polybar.override {
         alsaSupport = false;
         mpdSupport = true;
