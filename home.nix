@@ -531,7 +531,19 @@ in {
         id = 0;
         isDefault = true;
         search = {
-          default = "DuckDuckGo";
+          default = "Kagi";
+          engines = {
+            "Kagi" = {
+              urls = [{
+                template = "https://kagi.com/search";
+                params = [{
+                  name = "q";
+                  value = "{searchTerms}";
+                }];
+              }];
+              iconUpdateURL = "https://kagi.com/favicon.ico";
+            };
+          };
           force = true;
         };
         settings = {
