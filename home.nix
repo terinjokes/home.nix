@@ -75,6 +75,10 @@ in {
   # paths it should manage.
   home.username = "terin";
   home.homeDirectory = "/home/terin";
+  home.keyboard = {
+    variant = "intl-unicode";
+    options = [ "parens:swap_brackets" ];
+  };
 
   home.packages = with pkgs; [
     comma
