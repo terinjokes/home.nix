@@ -91,10 +91,9 @@ in {
 
     moreutils
     nixfmt
+    unstable.nix-output-monitor
 
     noto-fonts
-    iosevka-bin
-    (iosevka-bin.override { variant = "aile"; })
     sarasa-gothic
     emacs-all-the-icons-fonts
     (pkgs.callPackage ./packages/fonts/material-icons { })
