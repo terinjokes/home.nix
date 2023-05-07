@@ -263,6 +263,19 @@ in {
     nix-direnv.enable = true;
   };
 
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+    package = unstable.atuin;
+    settings = {
+      auto_sync = false;
+      update_check = false;
+      search_mode = "skim";
+      style = "compact";
+      inline_height = 40;
+    };
+  };
+
   programs.man = {
     enable = true;
     generateCaches = true;
