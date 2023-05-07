@@ -198,17 +198,17 @@ in {
           IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
         };
       };
+      "helium" = {
+        hostname = "198.199.98.92";
+        extraOptions = {
+          IdentityAgent = "/run/user/1000/yubikey-agent/yubikey-agent.sock";
+        };
+      };
       "git.terinstock.com".hostname = "100.84.210.105";
-      "nixos01".hostname = "100.75.69.73";
-      "nixos02".hostname = "100.84.210.105";
+      "nixos03".hostname = "100.77.181.18";
+      "nixos04".hostname = "100.78.94.13";
       "srvpi".hostname = "100.112.16.18";
       "multivac".hostname = "100.103.120.71";
-      "multivac-boot" = {
-        hostname = "192.168.1.3";
-        port = 2222;
-        proxyJump = "srvpi";
-        user = "root";
-      };
     };
   };
 
