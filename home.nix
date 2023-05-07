@@ -518,7 +518,7 @@ in {
 
   programs.firefox = {
     enable = true;
-    package = unstable.firefox.override {
+    package = pkgs.firefox.override {
       cfg = {
         smartcardSupport = false;
         enableFXCastBridge = true;

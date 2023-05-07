@@ -13,6 +13,7 @@ in {
     pamixer
 
     khinsider
+    krusader
   ];
 
   programs.firefox = {
@@ -471,11 +472,17 @@ in {
     x11.enable = true;
   };
 
-  xdg.mimeApps.defaultApplications = {
-    "text/html" = [ "firefox.desktop" ];
-    "x-scheme-handler/http" = [ "firefox.desktop" ];
-    "x-scheme-handler/https" = [ "firefox.desktop" ];
-    "x-scheme-handler/about" = [ "firefox.desktop" ];
-    "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+  xdg.mimeApps = {
+    associations.added = {
+      "inode/directory" = [ "org.kde.krusader.desktop" ];
+    };
+    defaultApplications = {
+      "inode/directory" = [ "org.kde.krusader.desktop" ];
+      "text/html" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "firefox.desktop" ];
+      "x-scheme-handler/https" = [ "firefox.desktop" ];
+      "x-scheme-handler/about" = [ "firefox.desktop" ];
+      "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+    };
   };
 }
