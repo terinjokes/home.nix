@@ -209,17 +209,10 @@ in {
       "module/info-unread" = {
         type = "custom/script";
         exec = "${
-            pkgs.writeOilApplication {
+            pkgs.writeBabashkaApplication {
               name = "info-maildir-unread";
-              runtimeInputs = with pkgs; [ mblaze coreutils ];
-              text = ''
-                var count = $(mdirs -a ~/Maildir | mlist -s | wc -l)
-                if (count !== "0") {
-                  printf '%%{T4}%s%%{T-} %d\n' $'\uf18a' $count
-                } else {
-                  echo ""
-                }
-              '';
+              runtimeInputs = with pkgs; [ mblaze ];
+              text = builtins.readFile ../scripts/info_maildir_unread.clj;
             }
           }/bin/info-maildir-unread";
         label-foreground = "#BF616A";
@@ -233,20 +226,7 @@ in {
             pkgs.writeBabashkaApplication {
               name = "info-techinc";
               runtimeInputs = [ pkgs.curl ];
-              text = ''
-                (require '[babashka.curl :as curl])
-
-                (defn format-color [color]
-                  (str "%{F" color "}"))
-                (defn format-underline [color]
-                  (str "%{u" color "}"))
-                (defn icon [code-point]
-                  (str "%{T4}" code-point "%{T-}"))
-
-                (let [state (:body (curl/get "https://techinc.nl/space/spacestate" {:headers ["User-Agent" "member/terinjokes"]}))]
-                  (cond (= state "closed") (println (format-color "#BF616A") (format-underline "#BF616A") "%{+u}" (icon "\ue335") "Closed" "%{-u}")
-                        (= state "open") (println (format-color "#A3BE8C") (format-underline "#A3Be8C") "%{+u}" (icon "\ue335") "Open" "%{-u}")))
-              '';
+              text = builtins.readFile ../scripts/info_techinc.clj;
             }
           }/bin/info-techinc";
         interval = 300;

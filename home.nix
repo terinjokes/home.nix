@@ -65,6 +65,7 @@ in {
       oauth2token = super.callPackage ./packages/oauth2token { };
       cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
       jaro = super.callPackage ./packages/jaro { };
+      babashka = super.callPackage ./packages/babashka { };
     })
   ];
 
