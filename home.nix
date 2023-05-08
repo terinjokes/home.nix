@@ -321,6 +321,10 @@ in {
         colorMoved = "default";
       };
       ghq.root = "/home/terin/Development";
+      fetch = {
+        prune = true;
+        pruneTags = true;
+      };
     };
   };
 
