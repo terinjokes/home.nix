@@ -4,7 +4,7 @@ let
   wallpapers = pkgs.callPackage ../wallpapers.nix { };
   unstable = import <nixpkgs-unstable> { config = config.nixpkgs.config; };
 in {
-  imports = [ ../types/work.nix ];
+  imports = [ ../modules/plasma-polkit-agent ../types/work.nix ];
 
   home.packages = with pkgs; [
     pavucontrol
@@ -343,6 +343,8 @@ in {
       RuntimeDirectory = "yubikey-agent";
     };
   };
+
+  services.plasma-polkit-agent.enable = true;
 
   xsession = {
     enable = true;

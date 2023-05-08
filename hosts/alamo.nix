@@ -2,6 +2,8 @@
 
 let wallpapers = pkgs.callPackage ../wallpapers.nix { };
 in {
+  imports = [ ../modules/plasma-polkit-agent ];
+
   nixpkgs.overlays = [
     (self: super: { khinsider = super.callPackage ../packages/khinsider { }; })
   ];
@@ -454,6 +456,8 @@ in {
       RuntimeDirectory = "yubikey-agent";
     };
   };
+
+  services.plasma-polkit-agent.enable = true;
 
   xsession = {
     enable = true;
