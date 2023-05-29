@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "khinsider";
-  version = "2.0.4";
+  version = "2.0.7";
 
   nativeBuildInputs = [ makeWrapper ];
 
@@ -10,7 +10,7 @@ buildGoModule rec {
     owner = "marcus-crane";
     repo = "khinsider";
     rev = "v${version}";
-    sha256 = "092chvxygb8a4hsd1khl40qgfmf7zwvxfxyxdqkc963fz9aah7lb";
+    sha256 = "sha256-sJacVi85flrkiQeTP7uO3ltA/H4ha4h3Gd3R9jUMWPE=";
   };
 
   ldflags = [
@@ -22,7 +22,7 @@ buildGoModule rec {
 
   subPackages = [ "." ];
 
-  vendorSha256 = "1an6b3f9s26127dp51vlsvhfvd6vrwncdv41vpyd59wr3751gwvf";
+  vendorSha256 = "sha256-Lstqz/O934mC9aHXyOIBIIMdO5g+VlgOnNGXGJVpumQ=";
 
   postInstall = ''
     wrapProgram "$out/bin/khinsider" --set KHINSIDER_NO_UPDATE true
