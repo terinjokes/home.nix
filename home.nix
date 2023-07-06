@@ -640,74 +640,74 @@ in {
         <!-- Prefer fonts for generics -->
         <alias binding="strong">
           <family>serif</family>
-          <prefer><family>Tinos</family></prefer>
+          <prefer><family>Liberation Serif</family></prefer>
         </alias>
         <alias binding="strong">
           <family>sans-serif</family>
-          <prefer><family>Arimo</family></prefer>
+          <prefer><family>Liberation Sans</family></prefer>
         </alias>
         <alias binding="strong">
           <family>sans</family>
-          <prefer><family>Arimo</family></prefer>
+          <prefer><family>Liberation Sans</family></prefer>
         </alias>
         <alias binding="strong">
           <family>monospace</family>
-          <prefer><family>Cousine</family></prefer>
+          <prefer><family>Liberation Mono</family></prefer>
         </alias>
 
         <!-- Map specific families to CrOS ones -->
         <match>
           <test name="family"><string>Arial</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Arimo</string>
+            <string>Liberation Sans</string>
           </edit>
         </match>
         <match>
           <test name="family"><string>Helvetica</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Arimo</string>
+            <string>Liberation Sans</string>
           </edit>
         </match>
         <match> <!-- NOT metric-compatible! -->
           <test name="family"><string>Verdana</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Arimo</string>
+            <string>Liberation Sans</string>
           </edit>
         </match>
         <match> <!-- NOT metric-compatible! -->
           <test name="family"><string>Tahoma</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Arimo</string>
+            <string>Liberation Sans</string>
           </edit>
         </match>
         <match>
           <test name="family"><string>Times</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Tinos</string>
+            <string>Liberation Serif</string>
           </edit>
         </match>
         <match>
           <test name="family"><string>Times New Roman</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Tinos</string>
+            <string>Liberation Serif</string>
           </edit>
         </match>
         <match> <!-- NOT metric-compatible! -->
           <test name="family"><string>Consolas</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Cousine</string>
+            <string>Liberation Mono</string>
           </edit>
         </match>
         <match>
           <test name="family"><string>Courier</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Cousine</string>
+            <string>Liberation Mono</string>
           </edit>
         </match>
         <match>
           <test name="family"><string>Courier New</string></test>
           <edit name="family" mode="assign" binding="strong">
-            <string>Cousine</string>
+            <string>Liberation Mono</string>
           </edit>
         </match>
         <match>
