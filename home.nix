@@ -528,25 +528,6 @@ in {
         enableFXCastBridge = true;
       };
     };
-    extensions = with nur.repos.rycee.firefox-addons; [
-      (pkgs.callPackage ./packages/firefox-addons/containerise {
-        inherit buildFirefoxXpiAddon;
-      })
-      (pkgs.callPackage ./packages/firefox-addons/fx_cast {
-        inherit buildFirefoxXpiAddon;
-      })
-      (pkgs.callPackage ./packages/firefox-addons/simple-translate {
-        inherit buildFirefoxXpiAddon;
-      })
-      multi-account-containers
-      onepassword-password-manager
-      stylus
-      temporary-containers
-      tree-style-tab
-      ublock-origin
-      violentmonkey
-      web-scrobbler
-    ];
     profiles = {
       terin = {
         id = 0;
@@ -590,6 +571,28 @@ in {
           "widget.use-xdg-desktop-portal.file-picker" = 1;
           "widget.use-xdg-desktop-portal.mime-handler" = 1;
         };
+        extensions = with nur.repos.rycee.firefox-addons; [
+          (pkgs.callPackage ./packages/firefox-addons/containerise {
+            inherit buildFirefoxXpiAddon;
+          })
+          (pkgs.callPackage ./packages/firefox-addons/fx_cast {
+            inherit buildFirefoxXpiAddon;
+          })
+          (pkgs.callPackage ./packages/firefox-addons/simple-translate {
+            inherit buildFirefoxXpiAddon;
+          })
+          (pkgs.callPackage ./packages/firefox-addons/tst-colored-tabs {
+            inherit buildFirefoxXpiAddon;
+          })
+          multi-account-containers
+          onepassword-password-manager
+          stylus
+          temporary-containers
+          tree-style-tab
+          ublock-origin
+          violentmonkey
+          web-scrobbler
+        ];
         userChrome = ''
           #sidebar-header {
             visibility: collapse !important;
