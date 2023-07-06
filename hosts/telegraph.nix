@@ -155,7 +155,6 @@ in {
     ];
   };
 
-  services.easyeffects.enable = true;
   services.blueman-applet.enable = true;
 
   services.polybar = {
