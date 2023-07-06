@@ -273,6 +273,7 @@ in {
       search_mode = "skim";
       style = "compact";
       inline_height = 40;
+      filter_mode_shell_up_key_binding = "session";
     };
   };
 
