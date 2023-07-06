@@ -15,6 +15,7 @@
     initExtra = ''
       . ${./zinput}
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+      zstyle ':completion::complete:make:*:targets' call-command true
       PROMPT='%2~ » '
     '';
   };
