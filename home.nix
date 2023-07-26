@@ -58,14 +58,13 @@ in {
           "--enable-features=WebUIDarkMode,VaapiVideoDecoder,VaapiVideoEncoder --force-dark-mode";
       };
       oil = unstable.oil;
-      kubectl = super.callPackage ./packages/kubectl {
-        buildGoModule = unstable.buildGo119Module;
-      };
+      kubectl = super.callPackage ./packages/kubectl { };
       _1password-gui = unstable._1password-gui;
       oauth2token = super.callPackage ./packages/oauth2token { };
       cyrus-sasl-xoauth2 = super.callPackage ./packages/cyrus-sasl-xoauth2 { };
       jaro = super.callPackage ./packages/jaro { };
       babashka = super.callPackage ./packages/babashka { };
+      discord = unstable.discord.override { withOpenASAR = true; };
     })
   ];
 
@@ -133,6 +132,7 @@ in {
 
     unstable.okular
     unstable.chatterino2
+    discord
     streamlink
     mpc-qt
 
