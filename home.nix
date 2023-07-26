@@ -138,6 +138,7 @@ in {
 
     nodePackages.yaml-language-server
 
+    krusader
     ghostscript
     libsForQt5.breeze-icons
     libsForQt5.kdegraphics-thumbnailers
@@ -628,7 +629,11 @@ in {
     mime.enable = true;
     mimeApps = {
       enable = true;
+      associations.added = {
+        "inode/directory" = [ "org.kde.krusader.desktop" ];
+      };
       defaultApplications = {
+        "inode/directory" = [ "org.kde.krusader.desktop" ];
         "application/pdf" = [ "org.kde.okular.desktop" ];
       };
     };

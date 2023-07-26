@@ -15,7 +15,6 @@ in {
     pamixer
 
     khinsider
-    krusader
   ];
 
   programs.firefox = {
